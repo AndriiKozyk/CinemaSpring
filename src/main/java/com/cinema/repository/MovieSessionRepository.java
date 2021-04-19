@@ -9,6 +9,8 @@ public interface MovieSessionRepository {
 
     MovieSession updateMovieSession(Long id, MovieSession movieSession);
 
+    MovieSession updateMovieSessionStatus(Long id, MovieSession movieSession);
+
     MovieSession updateMovieSessionPlace(Long id, MovieSession movieSession);
 
     void deleteSession(Long id);

@@ -35,6 +35,16 @@ public class MovieSessionRepositoryImpl implements com.cinema.repository.MovieSe
     }
 
     @Override
+    public MovieSession updateMovieSessionStatus(Long id, MovieSession movieSession) {
+        MovieSession session = list.stream()
+                .filter(mSession -> mSession.getId().equals(id))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+        session.setStatus(movieSession.getStatus());
+        return movieSession;
+    }
+
+    @Override
     public MovieSession updateMovieSessionPlace(Long id, MovieSession movieSession) {
         MovieSession session = list.stream()
                 .filter(mSession -> mSession.getId().equals(id))

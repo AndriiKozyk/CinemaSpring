@@ -5,10 +5,8 @@ import com.cinema.model.User;
 import com.cinema.repository.UserRepository;
 import com.cinema.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -17,7 +15,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(String login) {
-        log.info("getUser by login {}", login);
         User user = userRepository.getUser(login);
         return mapUserToUserDto(user);
     }

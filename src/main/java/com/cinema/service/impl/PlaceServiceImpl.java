@@ -42,6 +42,7 @@ public class PlaceServiceImpl implements com.cinema.service.PlaceService {
                 .id(place.getId())
                 .number(place.getNumber())
                 .row(place.getRow())
+                .type(place.getType())
                 .build();
     }
 
@@ -49,6 +50,7 @@ public class PlaceServiceImpl implements com.cinema.service.PlaceService {
         return Place.builder()
                 .row(placeDto.getRow())
                 .number(placeDto.getNumber())
+                .type(placeDto.getType())
                 .build();
     }
 

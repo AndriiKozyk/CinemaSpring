@@ -2,6 +2,7 @@ package com.cinema.service.impl;
 
 import com.cinema.dto.MovieSessionGeneralDto;
 import com.cinema.dto.MovieSessionPlaceDto;
+import com.cinema.dto.MovieSessionStatusDto;
 import com.cinema.model.MovieSession;
 import com.cinema.repository.MovieSessionRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,13 @@ public class MovieSessionServiceImpl implements com.cinema.service.MovieSessionS
     }
 
     @Override
+    public MovieSessionStatusDto updateMovieSessionStatus(Long id, MovieSessionStatusDto sessionStatusDto) {
+        MovieSession session = mapSessionStatusDtoToSession(sessionStatusDto);
+        sessionRepository.updateMovieSessionStatus(id, session);
+        return sessionStatusDto;
+    }
+
+    @Override
     public MovieSessionPlaceDto updateMovieSessionPlace(Long id, MovieSessionPlaceDto sessionPlaceDto) {
         MovieSession session = mapSessionPlaceDtoToSession(sessionPlaceDto);
         sessionRepository.updateMovieSessionPlace(id, session);
@@ -49,6 +57,13 @@ public class MovieSessionServiceImpl implements com.cinema.service.MovieSessionS
     @Override
     public void deleteMovieSession(Long id) {
         sessionRepository.deleteSession(id);
+    }
+
+    private MovieSession mapSessionStatusDtoToSession(MovieSessionStatusDto sessionStatusDto) {
+        return MovieSession.builder()
+                .id(sessionStatusDto.getId())
+                .status(sessionStatusDto.getStatus())
+                .build();
     }
 
     private MovieSession mapSessionPlaceDtoToSession(MovieSessionPlaceDto sessionPlaceDto) {

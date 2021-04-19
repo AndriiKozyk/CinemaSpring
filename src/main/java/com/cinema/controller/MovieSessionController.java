@@ -2,6 +2,7 @@ package com.cinema.controller;
 
 import com.cinema.dto.MovieSessionGeneralDto;
 import com.cinema.dto.MovieSessionPlaceDto;
+import com.cinema.dto.MovieSessionStatusDto;
 import com.cinema.service.MovieSessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,9 @@ public class MovieSessionController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
-    public MovieSessionPlaceDto getMovieSessionPlace(@PathVariable Long id) {
-        return sessionService.getMovieSessionPlace(id);
+    @GetMapping("/{idPlace}")
+    public MovieSessionPlaceDto getMovieSessionPlace(@PathVariable Long idPlace) {
+        return sessionService.getMovieSessionPlace(idPlace);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,10 +42,17 @@ public class MovieSessionController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{id}")
-    public MovieSessionPlaceDto updateMovieSessionPlace(@PathVariable Long id,
+    @PatchMapping("/{idStatus}")
+    public MovieSessionStatusDto updateMovieSessionStatus(@PathVariable Long idStatus,
+                                                         @RequestBody MovieSessionStatusDto sessionStatusDto) {
+        return sessionService.updateMovieSessionStatus(idStatus, sessionStatusDto);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/{idPlace}")
+    public MovieSessionPlaceDto updateMovieSessionPlace(@PathVariable Long idPlace,
                                                         @RequestBody MovieSessionPlaceDto sessionPlaceDto) {
-        return sessionService.updateMovieSessionPlace(id, sessionPlaceDto);
+        return sessionService.updateMovieSessionPlace(idPlace, sessionPlaceDto);
     }
 
     @DeleteMapping("/{id}")

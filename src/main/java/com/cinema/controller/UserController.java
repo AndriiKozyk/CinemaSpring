@@ -21,6 +21,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{login}")
     public UserDto getUser(@PathVariable String login) {
+        log.info("Get user by login: {}", login);
         return userService.getUser(login);
     }
 
