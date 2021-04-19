@@ -43,10 +43,7 @@ public class UserServiceImpl implements UserService {
                 .id(user.getId())
                 .login(user.getLogin())
                 .role(user.getRole())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
                 .email(user.getEmail())
-                .phone(user.getPhone())
                 .build();
     }
 
@@ -55,10 +52,7 @@ public class UserServiceImpl implements UserService {
                 .login(userDto.getLogin())
                 .password(userDto.getPassword())
                 .role(userDto.getRole())
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
-                .phone(userDto.getPhone())
                 .build();
     }
 
