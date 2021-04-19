@@ -1,45 +1,45 @@
 package com.cinema.controller;
 
+import com.cinema.api.UserApi;
+import com.cinema.controller.assembler.UserAssembler;
+import com.cinema.controller.model.UserModel;
 import com.cinema.dto.UserDto;
 import com.cinema.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserApi {
 
     private final UserService userService;
+    private final UserAssembler userAssembler;
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{login}")
-    public UserDto getUser(@PathVariable String login) {
+    @Override
+    public UserModel getUser(String login) {
         log.info("Get user by login: {}", login);
-        return userService.getUser(login);
+        UserDto user = userService.getUser(login);
+        return userAssembler.toModel(user);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public UserDto createUser(@Valid @RequestBody UserDto userDto) {
+    @Override
+    public UserModel createUser(UserDto userDto) {
         log.info("Create user: {}", userDto);
-        return userService.createUser(userDto);
+        UserDto user = userService.createUser(userDto);
+        return userAssembler.toModel(user);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{login}")
-    public UserDto updateUser(@PathVariable String login, @RequestBody UserDto userDto) {
-        return userService.updateUser(login, userDto);
+    @Override
+    public UserModel updateUser(String login, UserDto userDto) {
+        UserDto user = userService.updateUser(login, userDto);
+        return userAssembler.toModel(user);
     }
 
-    @DeleteMapping("/{login}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String login) {
+    @Override
+    public ResponseEntity<Void> deleteUser(String login) {
         userService.deleteUser(login);
         return ResponseEntity.noContent().build();
     }

@@ -21,7 +21,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     @NotNull
-    @Email
+    @Email(message = "Should be like email@email.com")
     private String email;
     private String phone;
 

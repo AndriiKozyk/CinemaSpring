@@ -1,5 +1,6 @@
 package com.cinema.repository.impl;
 
+import com.cinema.exception.UserNotFoundException;
 import com.cinema.model.User;
 import com.cinema.repository.UserRepository;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class UserRepositoryImpl implements UserRepository {
         return list.stream()
                 .filter(user -> user.getLogin().equals(login))
                 .findFirst()
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
         if (isDeleted) {
             list.add(user);
         } else {
-            throw new RuntimeException("User does not exist with login " + login);
+            throw new UserNotFoundException();
         }
         return user;
     }
