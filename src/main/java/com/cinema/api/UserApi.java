@@ -13,20 +13,22 @@ import javax.validation.Valid;
 @Api(tags = "User management API")
 @RequestMapping("/api/v1/users")
 public interface UserApi {
-
-    @ApiOperation("Get use from database")
+    @ApiOperation("Get user from database")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{login}")
     UserModel getUser(@PathVariable String login);
 
+    @ApiOperation("Create new user")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     UserModel createUser(@Valid @RequestBody UserDto userDto);
 
+    @ApiOperation("Update user in database")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{login}")
     UserModel updateUser(@PathVariable String login, @Valid @RequestBody UserDto userDto);
 
+    @ApiOperation("Delete user from database")
     @DeleteMapping("/{login}")
     ResponseEntity<Void> deleteUser(@PathVariable String login);
 }

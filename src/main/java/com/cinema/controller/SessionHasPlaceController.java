@@ -1,51 +1,46 @@
 package com.cinema.controller;
 
+import com.cinema.api.SessionHasPlaceApi;
 import com.cinema.controller.assembler.SessionHasPlaceAssembler;
 import com.cinema.controller.model.SessionHasPlaceModel;
 import com.cinema.dto.SessionHasPlaceDto;
 import com.cinema.service.SessionHasPlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/shps")
-public class SessionHasPlaceController {
+public class SessionHasPlaceController implements SessionHasPlaceApi {
 
     private final SessionHasPlaceService sessionHasPlaceService;
     private final SessionHasPlaceAssembler sessionHasPlaceAssembler;
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
-    public SessionHasPlaceModel getSessionHasPlace(@PathVariable int id) {
+    @Override
+    public SessionHasPlaceModel getSessionHasPlace(int id) {
         log.info("Get SessionPlace by id: {}", id);
         SessionHasPlaceDto sessionHasPlace = sessionHasPlaceService.getSessionHasPlace(id);
         return sessionHasPlaceAssembler.toModel(sessionHasPlace);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public SessionHasPlaceModel createSessionHasPlace(@RequestBody SessionHasPlaceDto sessionHasPlaceDto) {
+    @Override
+    public SessionHasPlaceModel createSessionHasPlace(SessionHasPlaceDto sessionHasPlaceDto) {
         log.info("Create session place {}", sessionHasPlaceDto);
         SessionHasPlaceDto sessionHasPlace = sessionHasPlaceService.createSessionHasPlace(sessionHasPlaceDto);
         return sessionHasPlaceAssembler.toModel(sessionHasPlace);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
-    public SessionHasPlaceModel updateSessionHasPlace(@PathVariable int id,
-                                                    @RequestBody SessionHasPlaceDto sessionHasPlaceDto) {
+    @Override
+    public SessionHasPlaceModel updateSessionHasPlace(int id, SessionHasPlaceDto sessionHasPlaceDto) {
         log.info("Update session place by id: {}", id);
         SessionHasPlaceDto sessionHasPlace = sessionHasPlaceService.updateSessionHasPlace(id, sessionHasPlaceDto);
         return sessionHasPlaceAssembler.toModel(sessionHasPlace);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSessionHasPlace(@PathVariable int id) {
+    @Override
+    public ResponseEntity<Void> deleteSessionHasPlace(int id) {
         sessionHasPlaceService.deleteSessionHasPlace(id);
         log.info("Delete session place by id: {}", id);
         return ResponseEntity.noContent().build();
