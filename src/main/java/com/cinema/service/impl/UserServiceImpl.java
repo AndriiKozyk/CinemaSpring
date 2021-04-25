@@ -47,10 +47,8 @@ public class UserServiceImpl implements UserService {
 
     private UserDto mapUserToUserDto(User user) {
         return UserDto.builder()
-                .id(user.getId())
                 .login(user.getLogin())
                 .role(user.getRole())
-                .email(user.getEmail())
                 .build();
     }
 
@@ -59,7 +57,6 @@ public class UserServiceImpl implements UserService {
                 .login(userDto.getLogin())
                 .password(userDto.getPassword())
                 .role(userDto.getRole())
-                .email(userDto.getEmail())
                 .build();
     }
 

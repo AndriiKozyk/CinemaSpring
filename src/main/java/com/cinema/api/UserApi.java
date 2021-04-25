@@ -25,7 +25,7 @@ public interface UserApi {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{login}")
-    UserModel updateUser(@PathVariable String login, @RequestBody UserDto userDto);
+    UserModel updateUser(@PathVariable String login, @Valid @RequestBody UserDto userDto);
 
     @DeleteMapping("/{login}")
     ResponseEntity<Void> deleteUser(@PathVariable String login);

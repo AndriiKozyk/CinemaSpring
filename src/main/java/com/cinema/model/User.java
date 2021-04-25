@@ -1,5 +1,6 @@
 package com.cinema.model;
 
+import com.cinema.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class User {
     @Column(unique = true)
     private String login;
     private String password;
-    private String role;
+    private Role role;
     @Column(unique = true)
     private String email;
 

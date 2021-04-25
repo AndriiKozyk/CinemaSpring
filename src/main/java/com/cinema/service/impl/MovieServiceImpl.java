@@ -43,7 +43,7 @@ public class MovieServiceImpl implements com.cinema.service.MovieService {
                 .name(movie.getName())
                 .duration(movie.getDuration())
                 .price(movie.getPrice())
-                .genre(movie.getGenre())
+                .genreId(movie.getGenreId())
                 .build();
     }
 
@@ -52,7 +52,7 @@ public class MovieServiceImpl implements com.cinema.service.MovieService {
                 .name(movieDto.getName())
                 .duration(movieDto.getDuration())
                 .price(movieDto.getPrice())
-                .genre(movieDto.getGenre())
+                .genreId(movieDto.getGenreId())
                 .build();
     }
 

@@ -13,6 +13,6 @@ public class MovieDto {
     private String name;
     private int duration;
     private BigDecimal price;
-    private String genre;
+    private Long genreId;
 
 }
