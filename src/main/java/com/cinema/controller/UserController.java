@@ -34,12 +34,14 @@ public class UserController implements UserApi {
 
     @Override
     public UserModel updateUser(String login, UserDto userDto) {
+        log.info("Update user by login: {}", login);
         UserDto user = userService.updateUser(login, userDto);
         return userAssembler.toModel(user);
     }
 
     @Override
     public ResponseEntity<Void> deleteUser(String login) {
+        log.info("Delete user by login: {}", login);
         userService.deleteUser(login);
         return ResponseEntity.noContent().build();
     }
