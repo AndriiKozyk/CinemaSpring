@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/genres")
 @RequiredArgsConstructor
@@ -22,13 +24,13 @@ public class GenreController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public GenreDto createGenre(@RequestBody GenreDto genreDto) {
+    public GenreDto createGenre(@Valid @RequestBody GenreDto genreDto) {
         return genreService.createGenre(genreDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public GenreDto updateGenre(@PathVariable Long id, @RequestBody GenreDto genreDto) {
+    public GenreDto updateGenre(@PathVariable Long id, @Valid @RequestBody GenreDto genreDto) {
         return genreService.updateGenre(id, genreDto);
     }
 

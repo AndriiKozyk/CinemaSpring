@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/movies")
 @RequiredArgsConstructor
@@ -22,13 +24,13 @@ public class MovieController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public MovieDto createMovie(@RequestBody MovieDto movieDto) {
+    public MovieDto createMovie(@Valid @RequestBody MovieDto movieDto) {
         return movieService.createMovie(movieDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public MovieDto updateMovie(@PathVariable int id, @RequestBody MovieDto movieDto) {
+    public MovieDto updateMovie(@PathVariable int id, @Valid @RequestBody MovieDto movieDto) {
         return movieService.updateMovie(id, movieDto);
     }
 

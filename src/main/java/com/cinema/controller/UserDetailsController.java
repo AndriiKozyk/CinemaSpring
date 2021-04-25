@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/details")
 @RequiredArgsConstructor
@@ -22,13 +24,13 @@ public class UserDetailsController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UserDetailsDto createDetails(@RequestBody UserDetailsDto detailsDto) {
+    public UserDetailsDto createDetails(@Valid @RequestBody UserDetailsDto detailsDto) {
         return service.createDetails(detailsDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public UserDetailsDto updateDetails(@PathVariable Long id, @RequestBody UserDetailsDto detailsDto) {
+    public UserDetailsDto updateDetails(@PathVariable Long id, @Valid @RequestBody UserDetailsDto detailsDto) {
         return service.updateDetails(id, detailsDto);
     }
 

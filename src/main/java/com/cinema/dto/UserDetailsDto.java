@@ -14,10 +14,13 @@ import javax.validation.constraints.NotNull;
 public class UserDetailsDto {
 
     private Long userId;
+    @NotNull(message = "First name can not be null")
     private String firstName;
+    @NotNull(message = "Last name can not be null")
     private String lastName;
+    @NotNull(message = "Phone number can not be null")
     private String phone;
-    @NotNull
+    @NotNull(message = "Email can not be null")
     @Email(message = "Should be like email@email.com")
     private String email;
 
