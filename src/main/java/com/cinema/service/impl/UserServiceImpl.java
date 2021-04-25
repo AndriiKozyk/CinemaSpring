@@ -1,6 +1,7 @@
 package com.cinema.service.impl;
 
 import com.cinema.dto.UserDto;
+import com.cinema.exception.UserNotFoundException;
 import com.cinema.model.User;
 import com.cinema.repository.UserRepository;
 import com.cinema.service.UserService;
@@ -15,27 +16,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(String login) {
-        User user = userRepository.getUser(login);
+        User user = userRepository.findByLogin(login)
+                .orElseThrow(UserNotFoundException::new);
         return mapUserToUserDto(user);
     }
 
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = mapUserDtoToUser(userDto);
-        user = userRepository.createUser(user);
+        user = userRepository.save(user);
         return mapUserToUserDto(user);
     }
 
     @Override
     public UserDto updateUser(String login, UserDto userDto) {
         User user = mapUserDtoToUser(userDto);
-        user = userRepository.updateUser(login, user);
+        if (!userRepository.existsByLogin(login)) {
+            throw new UserNotFoundException();
+        }
+        user = userRepository.save(user);
         return mapUserToUserDto(user);
     }
 
     @Override
     public void deleteUser(String login) {
-        userRepository.deleteUser(login);
+        User user = userRepository.findByLogin(login)
+                .orElseThrow(UserNotFoundException::new);
+        userRepository.delete(user);
     }
 
     private UserDto mapUserToUserDto(User user) {

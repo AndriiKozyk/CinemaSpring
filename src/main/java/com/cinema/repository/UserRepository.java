@@ -1,15 +1,16 @@
 package com.cinema.repository;
 
 import com.cinema.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository {
+import java.util.Optional;
 
-    User getUser(String login);
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    User createUser(User user);
+    Optional<User> findByLogin(String login);
 
-    User updateUser(String login, User user);
-
-    void deleteUser(String login);
+    boolean existsByLogin(String login);
 
 }
