@@ -2,15 +2,15 @@ package com.cinema.exception;
 
 import com.cinema.model.enums.ErrorType;
 
-public class UserNotFoundException extends ServiceException {
+public class TicketNotFoundException extends ServiceException {
 
-    private static final String DEFAULT_MESSAGE = "User does not found";
+    private static final String DEFAULT_MESSAGE = "Ticket does not found";
 
-    public UserNotFoundException() {
+    public TicketNotFoundException() {
         super(DEFAULT_MESSAGE);
     }
 
-    public UserNotFoundException(String message) {
+    public TicketNotFoundException(String message) {
         super(message);
     }
 
