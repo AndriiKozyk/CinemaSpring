@@ -1,5 +1,7 @@
 package com.cinema.controller;
 
+import com.cinema.controller.assembler.TicketAssembler;
+import com.cinema.controller.model.TicketModel;
 import com.cinema.dto.TicketDto;
 import com.cinema.service.TicketService;
 import lombok.RequiredArgsConstructor;
@@ -15,26 +17,30 @@ import org.springframework.web.bind.annotation.*;
 public class TicketController {
 
     private final TicketService ticketService;
+    private final TicketAssembler ticketAssembler;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public TicketDto getTicket(@PathVariable Long id) {
+    public TicketModel getTicket(@PathVariable Long id) {
         log.info("Get ticket by id: {}", id);
-        return ticketService.getTicket(id);
+        TicketDto ticket = ticketService.getTicket(id);
+        return ticketAssembler.toModel(ticket);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public TicketDto createTicket(@RequestBody TicketDto ticketDto) {
+    public TicketModel createTicket(@RequestBody TicketDto ticketDto) {
         log.info("Create ticket {}", ticketDto);
-        return ticketService.createTicket(ticketDto);
+        TicketDto ticket = ticketService.createTicket(ticketDto);
+        return ticketAssembler.toModel(ticket);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public TicketDto updateTicket(@PathVariable Long id, @RequestBody TicketDto ticketDto) {
+    public TicketModel updateTicket(@PathVariable Long id, @RequestBody TicketDto ticketDto) {
         log.info("Update ticket by id: {}", id);
-        return ticketService.updateTicket(id, ticketDto);
+        TicketDto ticket = ticketService.updateTicket(id, ticketDto);
+        return ticketAssembler.toModel(ticket);
     }
 
     @DeleteMapping("/{id}")

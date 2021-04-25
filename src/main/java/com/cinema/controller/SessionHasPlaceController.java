@@ -1,5 +1,7 @@
 package com.cinema.controller;
 
+import com.cinema.controller.assembler.SessionHasPlaceAssembler;
+import com.cinema.controller.model.SessionHasPlaceModel;
 import com.cinema.dto.SessionHasPlaceDto;
 import com.cinema.service.SessionHasPlaceService;
 import lombok.RequiredArgsConstructor;
@@ -15,27 +17,31 @@ import org.springframework.web.bind.annotation.*;
 public class SessionHasPlaceController {
 
     private final SessionHasPlaceService sessionHasPlaceService;
+    private final SessionHasPlaceAssembler sessionHasPlaceAssembler;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public SessionHasPlaceDto getSessionHasPlace(@PathVariable int id) {
+    public SessionHasPlaceModel getSessionHasPlace(@PathVariable int id) {
         log.info("Get SessionPlace by id: {}", id);
-        return sessionHasPlaceService.getSessionHasPlace(id);
+        SessionHasPlaceDto sessionHasPlace = sessionHasPlaceService.getSessionHasPlace(id);
+        return sessionHasPlaceAssembler.toModel(sessionHasPlace);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public SessionHasPlaceDto createSessionHasPlace(@RequestBody SessionHasPlaceDto sessionHasPlaceDto) {
+    public SessionHasPlaceModel createSessionHasPlace(@RequestBody SessionHasPlaceDto sessionHasPlaceDto) {
         log.info("Create session place {}", sessionHasPlaceDto);
-        return sessionHasPlaceService.createSessionHasPlace(sessionHasPlaceDto);
+        SessionHasPlaceDto sessionHasPlace = sessionHasPlaceService.createSessionHasPlace(sessionHasPlaceDto);
+        return sessionHasPlaceAssembler.toModel(sessionHasPlace);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public SessionHasPlaceDto updateSessionHasPlace(@PathVariable int id,
+    public SessionHasPlaceModel updateSessionHasPlace(@PathVariable int id,
                                                     @RequestBody SessionHasPlaceDto sessionHasPlaceDto) {
         log.info("Update session place by id: {}", id);
-        return sessionHasPlaceService.updateSessionHasPlace(id, sessionHasPlaceDto);
+        SessionHasPlaceDto sessionHasPlace = sessionHasPlaceService.updateSessionHasPlace(id, sessionHasPlaceDto);
+        return sessionHasPlaceAssembler.toModel(sessionHasPlace);
     }
 
     @DeleteMapping("/{id}")

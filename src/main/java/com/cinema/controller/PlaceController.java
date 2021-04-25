@@ -1,5 +1,7 @@
 package com.cinema.controller;
 
+import com.cinema.controller.assembler.PlaceAssembler;
+import com.cinema.controller.model.PlaceModel;
 import com.cinema.dto.PlaceDto;
 import com.cinema.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -15,26 +17,30 @@ import org.springframework.web.bind.annotation.*;
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final PlaceAssembler placeAssembler;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public PlaceDto getPlace(@PathVariable int id) {
+    public PlaceModel getPlace(@PathVariable int id) {
         log.info("Get place by id: {}", id);
-        return placeService.getPlace(id);
+        PlaceDto place = placeService.getPlace(id);
+        return placeAssembler.toModel(place);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public PlaceDto createPlace(@RequestBody PlaceDto placeDto) {
+    public PlaceModel createPlace(@RequestBody PlaceDto placeDto) {
         log.info("Create place {}", placeDto);
-        return placeService.createPlace(placeDto);
+        PlaceDto place = placeService.createPlace(placeDto);
+        return placeAssembler.toModel(place);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public PlaceDto updatePlace(@PathVariable int id, @RequestBody PlaceDto placeDto) {
+    public PlaceModel updatePlace(@PathVariable int id, @RequestBody PlaceDto placeDto) {
         log.info("Update place by id: {}", id);
-        return placeService.updatePlace(id, placeDto);
+        PlaceDto place = placeService.updatePlace(id, placeDto);
+        return placeAssembler.toModel(place);
     }
 
     @DeleteMapping("/{id}")

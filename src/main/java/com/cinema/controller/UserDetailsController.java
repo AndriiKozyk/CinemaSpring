@@ -1,5 +1,7 @@
 package com.cinema.controller;
 
+import com.cinema.controller.assembler.UserDetailsAssembler;
+import com.cinema.controller.model.UserDetailsModel;
 import com.cinema.dto.UserDetailsDto;
 import com.cinema.service.UserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -17,26 +19,30 @@ import javax.validation.Valid;
 public class UserDetailsController {
 
     private final UserDetailsService service;
+    private final UserDetailsAssembler userDetailsAssembler;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public UserDetailsDto getDetails(@PathVariable Long id) {
+    public UserDetailsModel getDetails(@PathVariable Long id) {
         log.info("Get user details by id: {}", id);
-        return service.getDetails(id);
+        UserDetailsDto details = service.getDetails(id);
+        return userDetailsAssembler.toModel(details);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UserDetailsDto createDetails(@Valid @RequestBody UserDetailsDto detailsDto) {
+    public UserDetailsModel createDetails(@Valid @RequestBody UserDetailsDto detailsDto) {
         log.info("Create user details {}", detailsDto);
-        return service.createDetails(detailsDto);
+        UserDetailsDto details = service.createDetails(detailsDto);
+        return userDetailsAssembler.toModel(details);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public UserDetailsDto updateDetails(@PathVariable Long id, @Valid @RequestBody UserDetailsDto detailsDto) {
+    public UserDetailsModel updateDetails(@PathVariable Long id, @Valid @RequestBody UserDetailsDto detailsDto) {
         log.info("Update user details by id: {}", id);
-        return service.updateDetails(id, detailsDto);
+        UserDetailsDto details = service.updateDetails(id, detailsDto);
+        return userDetailsAssembler.toModel(details);
     }
 
     @DeleteMapping("/{id}")

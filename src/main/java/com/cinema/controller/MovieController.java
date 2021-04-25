@@ -1,5 +1,7 @@
 package com.cinema.controller;
 
+import com.cinema.controller.assembler.MovieAssembler;
+import com.cinema.controller.model.MovieModel;
 import com.cinema.dto.MovieDto;
 import com.cinema.service.MovieService;
 import lombok.RequiredArgsConstructor;
@@ -17,26 +19,30 @@ import javax.validation.Valid;
 public class MovieController {
 
     private final MovieService movieService;
+    private final MovieAssembler movieAssembler;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public MovieDto getMovie(@PathVariable int id) {
+    public MovieModel getMovie(@PathVariable int id) {
         log.info("Get movie by id: {}", id);
-        return movieService.getMovie(id);
+        MovieDto movie = movieService.getMovie(id);
+        return movieAssembler.toModel(movie);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public MovieDto createMovie(@Valid @RequestBody MovieDto movieDto) {
+    public MovieModel createMovie(@Valid @RequestBody MovieDto movieDto) {
         log.info("Create movie {}", movieDto);
-        return movieService.createMovie(movieDto);
+        MovieDto movie = movieService.createMovie(movieDto);
+        return movieAssembler.toModel(movie);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public MovieDto updateMovie(@PathVariable int id, @Valid @RequestBody MovieDto movieDto) {
+    public MovieModel updateMovie(@PathVariable int id, @Valid @RequestBody MovieDto movieDto) {
         log.info("Update movie by id: {}", id);
-        return movieService.updateMovie(id, movieDto);
+        MovieDto movie = movieService.updateMovie(id, movieDto);
+        return movieAssembler.toModel(movie);
     }
 
     @DeleteMapping("/{id}")
